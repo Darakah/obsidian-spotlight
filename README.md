@@ -1,2 +1,3 @@
 # obsidian-spotlight
-Show random sections of notes or uncreated files in specified project.
+
+Show random block of notes from vault / in a specified project or with a certain combination of tags.
