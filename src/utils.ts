@@ -20,9 +20,14 @@ export function FilterMDFilesByTags(file: TFile, tagList: string[], metadataCach
         tags = fileCache.tags.map(i => i.tag.substring(1,))
     }
 
-    if (fileCache.frontmatter && fileCache.frontmatter.tags) {
-        return tagList.every(function (val) { return fileCache.frontmatter.tags.concat(tags).indexOf(val) >= 0; })
+    if (fileCache && fileCache.frontmatter && fileCache.frontmatter.tags) {
+        tags = fileCache.frontmatter.tags.concat(tags)
     }
+
+    if(tags.length > 0){
+        return tagList.every(function (val) { return tags.indexOf(val) >= 0; })
+    }
+    
     return false;
 }
 
@@ -49,13 +54,10 @@ function randomNumber(min, max): number {
 export function chooseRnadomNote(fileList: TFile[], tagList: string[], metadataCache: MetadataCache, match: string, currentPath: string, block: boolean, settings: SpotlightSettings): TFile {
 
     let regex = new RegExp(match)
-    let fileFiltered = fileList.filter(file => file.path.match(regex) &&
-        FilterMDFilesByTags(file, tagList, metadataCache) &&
-        (!block || metadataCache.getFileCache(file).blocks) &&
-        !settings.ignoreList.contains(file.path))
+    let fileFiltered = fileList.filter(file => file.path.match(regex) && FilterMDFilesByTags(file, tagList, metadataCache) && (!block || metadataCache.getFileCache(file).blocks) && !settings.ignoreList.contains(file.path))
     let rand = randomNumber(0, fileFiltered.length - 1)
 
-    if (!fileFiltered) {
+    if (fileFiltered.length === 0) {
         return null;
     }
 
