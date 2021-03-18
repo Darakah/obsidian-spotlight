@@ -14,7 +14,3 @@ a,
     top: 15px;
     position: relative;
 }
-
-.spotlight-container .popover.hover-popover {
-    display: none !important;
-}
