@@ -6,7 +6,7 @@ Show random block of note from vault / in a specified project or with a certain 
 
 ## Example
 
-<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_1.png?token=AHCHDTYPS6VZV3CO6RH65KTAKOBXW" />
+<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_1.png" />
 
 ## Features
 - Render block to show a note or a block of note
@@ -26,7 +26,7 @@ Show random block of note from vault / in a specified project or with a certain 
   - `Div container width in %`
   - `Div Height in Pixels`
   - `Div alignment` e.g. `left` or `right`
-<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_2.png?token=AHCHDTZHWP47MS3KPS2LSRTAKOCUM"/>
+<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_2.png"/>
 
 ## Settings:
 <img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Settings.png"/>
