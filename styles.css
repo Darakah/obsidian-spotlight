@@ -6,11 +6,3 @@
     padding: 15px;
     padding-top: 0px;
 }
-
-.spotlight-container,
-a,
-.cm-hmd-internal-link {
-    color: var(--text-normal) !important;
-    top: 15px;
-    position: relative;
-}
