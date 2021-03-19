@@ -1,6 +1,6 @@
 import type { App, Component } from 'obsidian'
 import { MarkdownRenderer } from 'obsidian'
-import { chooseRnadomNote, randomBlock } from './utils'
+import { chooseRandomNote, randomBlock } from './utils'
 import type { SpotlightSettings } from './types';
 
 export class SpotlightProcessor {
@@ -14,7 +14,7 @@ export class SpotlightProcessor {
 		let divAlign = (args[4]?.trim() == 'right') ? 'right' : 'left'
 
 		let currentNote = app.workspace.getActiveFile().path
-		let randomNote = chooseRnadomNote(app.vault.getMarkdownFiles(), tags, app.metadataCache, match, currentNote, block, settings)
+		let randomNote = chooseRandomNote(app.vault.getMarkdownFiles(), tags, app.metadataCache, match, currentNote, block, settings)
 
 		let elCanvas = el.createDiv({ cls: 'spotlight-container', attr: { id: 'container' } });
 		elCanvas.setAttribute('style', `width:${divWidth}%; height:${heightPar}px; float: ${divAlign};`)
@@ -24,7 +24,7 @@ export class SpotlightProcessor {
 			return;
 		}
 
-		let text = await app.vault.adapter.read(randomNote.path)
+		let text = await app.vault.cachedRead(randomNote)
 
 		elCanvas.createEl('a', { cls: "internal-link", href: `${randomNote.path}` }).createEl('i', {
 			cls: 'fa fa-external-link spotlight-link',
