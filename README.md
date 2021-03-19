@@ -36,6 +36,9 @@ Show random block of note from vault / in a specified project or with a certain 
 
 ## Release Notes
 
+### v0.1.1
+- Code improvements
+
 ### v0.1.0
 - Initial release
 
