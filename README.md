@@ -19,15 +19,19 @@ Show random block of note from vault / in a specified project or with a certain 
 
 - To display a note spotlight use render block id `spotlight-note` 
 - To display a block spotlight use render block id `spotlight-block`
-- Each line represents a certain argument (Arguments are identified by the row number i.e. if you want to use a later argument YOU MUST LEAVE AN EMPTY LINE FOR PREVIOUS UNSET ARGUMENTS OTHERWISE IT WON'T WORK!)
-- By order of lines the parameters are the following:
+- Each line represents a certain argument. Arguments are identified by with the following syntax: `argumentName`=`argumentValue` for e.g. to set div width: `divWidth=50` which sets the container width to 50% of the note width. 
+- Each argument must be on a separate line. 
+- Arguments can be in any order
+- Arguments that was not specified are set to default values
+- Arguments are: `tags`, `match`, `divWidth`, `divHeight` and `divAlign`
+- The parameters are the following:
   - `tags` tag list based on which to choose note pool to display from. Tags must be separated by a `;` without the `#` at the start. e.g. to get a note with tags `#test` and `#now` the first line must be `test;now` or `now;test`
   - `Path of notes to get info from` e.g. `Project Main/Project 1` for all notes in `Project Main/Project 1/`
   - `Div container width in %`
   - `Div Height in Pixels`
   - `Div alignment` e.g. `left` or `right`
 
-<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_2.png"/>
+<img src="https://raw.githubusercontent.com/Darakah/obsidian-spotlight/main/images/Example_3.png"/>
 
 ## Settings:
 
