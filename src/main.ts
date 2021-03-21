@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
-import { } from './utils'
-import { SpotlightSettingTab } from './settings'
-import { SpotlightProcessor } from './block'
+import { } from './utils';
+import { SpotlightSettingTab } from './settings';
+import { SpotlightProcessor } from './block';
 import type { SpotlightSettings } from './types';
 import { SETTINGS } from './constants';
 
@@ -15,15 +15,15 @@ export default class SpotlightPlugin extends Plugin {
 		console.log('Loaded Spotlight Plugin');
 
 		// Register note spotlight renderer
-		this.registerMarkdownCodeBlockProcessor('spotlight-note', async (source, el) => {
+		this.registerMarkdownCodeBlockProcessor('spotlight-note', async (source, el, ctx) => {
 			const proc = new SpotlightProcessor();
-			await proc.run(this, source, el, this.app, this.settings, false);
+			await proc.run(this, source, el, ctx, this.app, this.settings, false);
 		});
 
 		// Register block spotlight renderer
-		this.registerMarkdownCodeBlockProcessor('spotlight-block', async (source, el) => {
+		this.registerMarkdownCodeBlockProcessor('spotlight-block', async (source, el, ctx) => {
 			const proc = new SpotlightProcessor();
-			await proc.run(this, source, el, this.app, this.settings, true);
+			await proc.run(this, source, el, ctx, this.app, this.settings, true);
 		});
 
 		this.addSettingTab(new SpotlightSettingTab(this.app, this));

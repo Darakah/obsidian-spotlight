@@ -1,5 +1,6 @@
-import type { TFile, MetadataCache, BlockCache } from 'obsidian'
-import type { SpotlightSettings } from './types'
+import type { TFile, MetadataCache, BlockCache } from 'obsidian';
+import { getAllTags } from 'obsidian';
+import type { SpotlightSettings } from './types';
 
 /**
  * Return boolean if all tags present in obsidian note
@@ -13,19 +14,11 @@ export function FilterMDFilesByTags(file: TFile, tagList: string[], metadataCach
         return true;
     }
 
-    let fileCache = metadataCache.getFileCache(file);
-    let tags = [];
+    let tags = getAllTags(metadataCache.getFileCache(file)).map(e => e.slice(1, e.length));
 
-    if (fileCache && fileCache.tags) {
-        tags = fileCache.tags.map(i => i.tag.substring(1,))
-    }
-
-    if (fileCache && fileCache.frontmatter && fileCache.frontmatter.tags) {
-        tags = fileCache.frontmatter.tags.concat(tags)
-    }
-
-    if (tags.length > 0) {
-        return tagList.every(function (val) { return tags.indexOf(val) >= 0; })
+    console.log(tags);
+    if (tags && tags.length > 0) {
+        return tagList.every(function (val) { return tags.indexOf(val) >= 0; });
     }
 
     return false;
@@ -56,9 +49,9 @@ export function chooseRandomNote(fileList: TFile[], tagList: string[], metadataC
     // Remove "" from tag list if present
     if (tagList.contains("")) {
         if (tagList.length === 1) {
-            tagList = null
+            tagList = null;
         } else {
-            tagList = tagList.splice(tagList.indexOf(""), 1)
+            tagList = tagList.splice(tagList.indexOf(""), 1);
         }
     }
 
@@ -67,15 +60,15 @@ export function chooseRandomNote(fileList: TFile[], tagList: string[], metadataC
     try {
         regex = new RegExp(match);
     } catch (error) {
-        regex = ".*"
+        regex = ".*";
     }
 
     let fileFiltered = fileList.filter(file => file.path.match(regex) &&
         FilterMDFilesByTags(file, tagList, metadataCache) &&
         (!block || metadataCache.getFileCache(file).blocks) &&
-        !settings.ignoreList.contains(file.path))
+        !settings.ignoreList.contains(file.path));
 
-    let rand = randomNumber(0, fileFiltered.length - 1)
+    let rand = randomNumber(0, fileFiltered.length - 1);
 
     if (fileFiltered.length === 0) {
         return null;
@@ -86,10 +79,10 @@ export function chooseRandomNote(fileList: TFile[], tagList: string[], metadataC
     }
 
     while (fileFiltered[rand].path == currentPath) {
-        rand = randomNumber(0, fileFiltered.length - 1)
+        rand = randomNumber(0, fileFiltered.length - 1);
     }
 
-    return fileFiltered[rand]
+    return fileFiltered[rand];
 }
 
 /**
@@ -98,9 +91,9 @@ export function chooseRandomNote(fileList: TFile[], tagList: string[], metadataC
  * @param blocks - note metadata cache blocks
  */
 export function randomBlock(text: string, blocks: Record<string, BlockCache>): string {
-    let blockKeys = Object.keys(blocks)
-    let rand = randomNumber(0, blockKeys.length - 1)
-    let pos = blocks[blockKeys[rand]].position
+    let blockKeys = Object.keys(blocks);
+    let rand = randomNumber(0, blockKeys.length - 1);
+    let pos = blocks[blockKeys[rand]].position;
 
-    return text.slice(pos.start.offset, pos.end.offset)
+    return text.slice(pos.start.offset, pos.end.offset);
 }

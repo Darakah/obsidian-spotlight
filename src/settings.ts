@@ -1,5 +1,5 @@
-import { App, PluginSettingTab, Setting } from 'obsidian'
-import type SpotlightPlugin from './main'
+import { App, PluginSettingTab, Setting } from 'obsidian';
+import type SpotlightPlugin from './main';
 
 export class SpotlightSettingTab extends PluginSettingTab {
     plugin: SpotlightPlugin;
@@ -24,9 +24,9 @@ export class SpotlightSettingTab extends PluginSettingTab {
             .addText(text => text
                 .setPlaceholder(`${this.plugin.settings.divWidth}`)
                 .onChange(async (value) => {
-                    let numValue = parseInt(value)
+                    let numValue = parseInt(value);
                     if (isNaN(numValue)) {
-                        return
+                        return;
                     }
 
                     this.plugin.settings.divWidth = Math.abs(numValue);
@@ -39,9 +39,9 @@ export class SpotlightSettingTab extends PluginSettingTab {
             .addText(text => text
                 .setPlaceholder(`${this.plugin.settings.divHeight}`)
                 .onChange(async (value) => {
-                    let numValue = parseInt(value)
+                    let numValue = parseInt(value);
                     if (isNaN(numValue)) {
-                        return
+                        return;
                     }
 
                     this.plugin.settings.divHeight = Math.abs(numValue);
@@ -57,17 +57,17 @@ export class SpotlightSettingTab extends PluginSettingTab {
 
 
                     if (ignoreFile === '/' || ignoreFile === '' || this.plugin.settings.ignoreList.contains(ignoreFile)) {
-                        return
+                        return;
                     }
 
-                    this.plugin.settings.ignoreList.push(ignoreFile)
-                    ignoreFile = ''
+                    this.plugin.settings.ignoreList.push(ignoreFile);
+                    ignoreFile = '';
                     this.plugin.saveSettings();
                 }))
             .addText(text => text
                 .setPlaceholder(ignoreFile)
                 .onChange(async (value) => {
-                    ignoreFile = value.trim()
+                    ignoreFile = value.trim();
                 }));
 
         new Setting(containerEl)
@@ -78,21 +78,21 @@ export class SpotlightSettingTab extends PluginSettingTab {
                 .onClick(() => {
 
                     if (unignoreFile === '/' || !this.plugin.settings.ignoreList.contains(unignoreFile)) {
-                        return
+                        return;
                     }
 
-                    this.plugin.settings.ignoreList.splice(this.plugin.settings.ignoreList.indexOf(unignoreFile), 1)
-                    unignoreFile = ''
+                    this.plugin.settings.ignoreList.splice(this.plugin.settings.ignoreList.indexOf(unignoreFile), 1);
+                    unignoreFile = '';
                     this.plugin.saveSettings();
                 }))
             .addText(text => text
                 .setPlaceholder(unignoreFile)
                 .onChange(async (value) => {
-                    unignoreFile = value.trim()
+                    unignoreFile = value.trim();
                 }));
 
         new Setting(containerEl)
             .setName('Ignored List:')
-            .setDesc(this.plugin.settings.ignoreList.join(" --------- "))
+            .setDesc(this.plugin.settings.ignoreList.join(" --------- "));
     }
 }
