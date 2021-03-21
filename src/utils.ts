@@ -16,7 +16,6 @@ export function FilterMDFilesByTags(file: TFile, tagList: string[], metadataCach
 
     let tags = getAllTags(metadataCache.getFileCache(file)).map(e => e.slice(1, e.length));
 
-    console.log(tags);
     if (tags && tags.length > 0) {
         return tagList.every(function (val) { return tags.indexOf(val) >= 0; });
     }
