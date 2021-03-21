@@ -37,14 +37,14 @@ export class SpotlightSettingTab extends PluginSettingTab {
             .setName('Default Height')
             .setDesc('Height in pixels. integer, placeholder shows current value.')
             .addText(text => text
-                .setPlaceholder(`${this.plugin.settings.divheight}`)
+                .setPlaceholder(`${this.plugin.settings.divHeight}`)
                 .onChange(async (value) => {
                     let numValue = parseInt(value)
                     if (isNaN(numValue)) {
                         return
                     }
 
-                    this.plugin.settings.divheight = Math.abs(numValue);
+                    this.plugin.settings.divHeight = Math.abs(numValue);
                     await this.plugin.saveSettings();
                 }));
 

@@ -53,7 +53,23 @@ function randomNumber(min, max): number {
  */
 export function chooseRandomNote(fileList: TFile[], tagList: string[], metadataCache: MetadataCache, match: string, currentPath: string, block: boolean, settings: SpotlightSettings): TFile {
 
-    let regex = new RegExp(match)
+    // Remove "" from tag list if present
+    if (tagList.contains("")) {
+        if (tagList.length === 1) {
+            tagList = null
+        } else {
+            tagList = tagList.splice(tagList.indexOf(""), 1)
+        }
+    }
+
+    let regex;
+    // Catch errors such as '.**' caused by bad regex expressions
+    try {
+        regex = new RegExp(match);
+    } catch (error) {
+        regex = ".*"
+    }
+
     let fileFiltered = fileList.filter(file => file.path.match(regex) &&
         FilterMDFilesByTags(file, tagList, metadataCache) &&
         (!block || metadataCache.getFileCache(file).blocks) &&

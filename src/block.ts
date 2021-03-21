@@ -2,22 +2,32 @@ import type { App, Component } from 'obsidian'
 import { MarkdownRenderer } from 'obsidian'
 import { chooseRandomNote, randomBlock } from './utils'
 import type { SpotlightSettings } from './types';
+import { chownSync } from 'fs';
 
 export class SpotlightProcessor {
 
-	async run(Comp: Component, source: string, el: HTMLElement, app: App, settings: SpotlightSettings, args: string[], block: boolean) {
+	async run(Comp: Component, source: string, el: HTMLElement, app: App, settings: SpotlightSettings, block: boolean) {
 
-		let tags = args[0] ? args[0].split(';') : null
-		let match = args[1] ? `${args[1]}.*` : ".*"
-		let divWidth = parseInt(args[2]) ? parseInt(args[2]) : settings.divWidth
-		let heightPar = parseInt(args[3]) ? parseInt(args[3]) : settings.divheight
-		let divAlign = (args[4]?.trim() == 'right') ? 'right' : 'left'
+		let args = {
+			tags: '',
+			match: '.*',
+			divWidth: settings.divWidth,
+			divHeight: settings.divHeight,
+			divAlign: 'left'
+		}
+
+		source.split('\n').map(e => {
+			if (e) {
+				let param = e.trim().split('=')
+				args[param[0]] = param[1]?.trim()
+			}
+		})
 
 		let currentNote = app.workspace.getActiveFile().path
-		let randomNote = chooseRandomNote(app.vault.getMarkdownFiles(), tags, app.metadataCache, match, currentNote, block, settings)
+		let randomNote = chooseRandomNote(app.vault.getMarkdownFiles(), args.tags.split(';'), app.metadataCache, args.match, currentNote, block, settings)
 
 		let elCanvas = el.createDiv({ cls: 'spotlight-container', attr: { id: 'container' } });
-		elCanvas.setAttribute('style', `width:${divWidth}%; height:${heightPar}px; float: ${divAlign};`)
+		elCanvas.setAttribute('style', `width:${args.divWidth}%; height:${args.divHeight}px; float: ${args.divAlign};`)
 
 		if (!randomNote) {
 			elCanvas.setText('No note was found for the given search parameters!');
@@ -28,7 +38,7 @@ export class SpotlightProcessor {
 
 		elCanvas.createEl('a', { cls: "internal-link", href: `${randomNote.path}` }).createEl('i', {
 			cls: 'fa fa-external-link spotlight-link',
-			attr: { 'aria-hidden': 'true', 'style': 'float: right' }
+			attr: { 'aria-hidden': 'true', 'style': 'float: right; padding-top: 10px; color: var(--text-normal);' }
 		})
 
 		if (block) {

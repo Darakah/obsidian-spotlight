@@ -1,5 +1,5 @@
 export interface SpotlightSettings {
 	ignoreList: string[],
 	divWidth: number
-	divheight: number
+	divHeight: number
 }

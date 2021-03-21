@@ -1,6 +1,6 @@
 {
     "name": "Spotlight",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Block that features random notes or block of a note from vault / in a specified project or with a certain combination of tags.",
     "author": "darakah",
     "main": "main.js",

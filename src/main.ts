@@ -17,15 +17,13 @@ export default class SpotlightPlugin extends Plugin {
 		// Register note spotlight renderer
 		this.registerMarkdownCodeBlockProcessor('spotlight-note', async (source, el) => {
 			const proc = new SpotlightProcessor();
-			let args = source.split("\n")
-			await proc.run(this, source, el, this.app, this.settings, args, false);
+			await proc.run(this, source, el, this.app, this.settings, false);
 		});
 
 		// Register block spotlight renderer
 		this.registerMarkdownCodeBlockProcessor('spotlight-block', async (source, el) => {
 			const proc = new SpotlightProcessor();
-			let args = source.split("\n")
-			await proc.run(this, source, el, this.app, this.settings, args, true);
+			await proc.run(this, source, el, this.app, this.settings, true);
 		});
 
 		this.addSettingTab(new SpotlightSettingTab(this.app, this));
